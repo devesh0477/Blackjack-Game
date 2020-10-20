@@ -7,14 +7,20 @@
 
 .column {
     /* background-color: #006a4e; */
-    border:  1px solid black;
-    background-image: url("../images/casinoTable.jpg");
+    /* border:  1px solid black; */
+    /* background-image: url("../images/casinoTable.jpg"); */
     width: 50%;
     height: 350px; 
   }
   h2{
       color: #fff;
   }
+  h1{
+    color:#fff;
+}
+h4{
+  color: #fff;
+}
   
   .buttonContainer{
     /* position:relative;
@@ -47,4 +53,11 @@
     position: absolute;
     top: 80%;
     left: 20%;
+}
+
+body {
+  background-image: url("../images/casioTable3.jpg");
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
 }

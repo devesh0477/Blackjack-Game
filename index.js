@@ -42,6 +42,7 @@ function hitButton() {
 
 // ******************************* stand Button *********************************************
 function standButton() {
+   
            // A = 11 ; FACE CARDS = 10
      if (r1 === 11 || r1 === 12 || r1 === 13)  {
         r1 = 10;
@@ -70,9 +71,12 @@ function standButton() {
             image1.src = "deckOfCards"+"/"+selectSuit1+r1+".svg"; 
             selectDiv1.appendChild(image1);
            }
-           winner();
+
+           decideWinner();
+           document.getElementById("myBtn1").disabled = true;
 
         }
+    
    // ****************************************************************************************
     
   // ******************************* Disable Button ******************************************
@@ -95,22 +99,37 @@ function standButton() {
 
 
     // ********************************** Winner ************************************************
-    function winner() {
-        if ((userScoreBoard > botScoreBoard) && (userScoreBoard <= 21 )) {
-            document.getElementById("letsPlay").innerHTML= "You Win 🏆 " ;
-           }  else if ((botScoreBoard > 21) && (userScoreBoard > 21)) {
-            document.getElementById("letsPlay").innerHTML= "You Win 🏆 " ;
-           }
-             // bot winner
-            else if ((userScoreBoard < botScoreBoard) && (botScoreBoard <= 21 )) {
-                document.getElementById("letsPlay").innerHTML= "You Loose 😓 " ; 
-            } else if (userScoreBoard > 21) {
-                document.getElementById("letsPlay").innerHTML= "You Loose 😓 " ;
-               } 
-            //    else  (userScoreBoard == botScoreBoard) 
-            //    {
-            //     document.getElementById("letsPlay").innerHTML= "Draw 😇 "
-            //    }
+    function decideWinner() {
+        let winner;
+
+        if (userScoreBoard <= 21) {
+            if(userScoreBoard > botScoreBoard || botScoreBoard > 21 ) {
+                console.log("You win");
+                document.getElementById("letsPlay").innerHTML = " You win 🏆" ;
+
+
+            } else if( userScoreBoard < botScoreBoard ) {
+             console.log("You loose");
+             document.getElementById("letsPlay").innerHTML = "You are busted 😢" ;
+        
+            } 
+            else if ( userScoreBoard === botScoreBoard) {
+                console.log("Match Draw");
+                document.getElementById("letsPlay").innerHTML = "Match Draw 🙄" ;
+            }
+            else if (userScoreBoard > 21 && botScoreBoard <= 21) {
+                console.log("You loose");
+                document.getElementById("letsPlay").innerHTML = "You are busted  😢" ;
+                var audio = new Audio('sounds/loose.mp3');
+                 audio.play(); 
+            
+            } 
+            else if (userScoreBoard > 21 && botScoreBoard > 21) {
+                console.log("Match Draw");
+                document.getElementById("letsPlay").innerHTML = "Match Draw 🙄" ;
+            }
+             return winner;
+        }
     }
     // ***************************************************************************************
 
@@ -127,12 +146,30 @@ function standButton() {
 
 
    function dealButton() {
-    document.getElementById("userScoreID").innerHTML= "You:0" ;
+    let yourColumnImages = document.querySelector("#imageOutput1").querySelectorAll("img");
+    for (i = 0 ; i < yourColumnImages.length ; i++) {
+        yourColumnImages[i].remove();
+        userScoreBoard = 0
+        document.getElementById("letsPlay").innerText = "🃏 Let's Play 🃏";
+        userScore();
+        
+    }
+    document.getElementById("myBtn1").disabled = false;
 
-    document.getElementById('imageOutput1').removeChild(image1);
-   
-    
-    
     document.getElementById("dealerScoreID").innerHTML= "Dealer:0" ;
+    let dealerColumnImages = document.querySelector("#imageOutput2").querySelectorAll("img");
+    for (j = 0 ; j < dealerColumnImages.length ; j++) {
+        dealerColumnImages[j].remove();
+        botScoreBoard  = 0; 
+        document.getElementById("letsPlay").innerText = "🃏 Let's Play 🃏";
+        botScore();
+        
+    }
+    document.getElementById("myBtn2").disabled = false;
 
-   }
+}
+
+function play() {
+    var audio = new Audio('sounds/loose.mp3');
+    audio.play(); 
+}
